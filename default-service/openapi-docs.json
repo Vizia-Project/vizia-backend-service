@@ -1,0 +1,1628 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Vizia API Docs - OpenAPI 3.0",
+    "version": "1.0.0",
+    "description": "Backend REST API Documentation for Vizia Project"
+  },
+  "servers": [
+    {
+      "url": "https://vizia-gateway-d3nuby5t.ts.gateway.dev"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "Article"
+    },
+    {
+      "name": "Predicts"
+    },
+    {
+      "name": "History"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login by email and password",
+        "description": "Validate existing account by email and password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success login and get user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "string"
+                        },
+                        "token": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Login and get user are success",
+                  "data": {
+                    "id": 115,
+                    "name": "Teme Wakaihasite",
+                    "email": "temewaki@gmail.com",
+                    "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg",
+                    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiIxMjM0NTY3ODkw..."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Login credentials is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Login credentials is not valid"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Create a new account",
+        "description": "Add a new user account and validate each of input",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "password_confirmation"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "password_confirmation": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success create new account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "string"
+                        },
+                        "token": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "message": "New account creation is success",
+                  "data": {
+                    "id": 115,
+                    "name": "Teme Wakaihasite",
+                    "email": "temewaki@gmail.com",
+                    "photo": null,
+                    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiIxMjM0NTY3ODkw..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Registration input doesn't meet validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "validation": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Registration input doesn't meet validation",
+                  "validation": {
+                    "name": "must be at least 3 characters long",
+                    "email": "invalid email format",
+                    "password": "must contain at least 8 characters"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logging out user account",
+        "description": "Delete user credential from client and invalidate token",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success logging out account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Success logging out user account"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user account preferences",
+        "description": "Get account information and settings of user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the user to get",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get user preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "string"
+                        },
+                        "language": {
+                          "type": "string"
+                        },
+                        "reminder_time": {
+                          "type": "object",
+                          "properties": {
+                            "is_enabled": {
+                              "type": "boolean"
+                            },
+                            "time": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Success get user preferences",
+                    "data": {
+                      "name": "Teme Wakaihasite",
+                      "email": "temewaki@gmail.com",
+                      "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg",
+                      "langauge": "en",
+                      "reminder_time": {
+                        "is_enabled": true,
+                        "time": "22:00:00+7"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User account is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "User account is not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user account preferences",
+        "description": "Update account information and settings of user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the user to get",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "language": {
+                    "type": "string"
+                  },
+                  "reminder_time": {
+                    "type": "object",
+                    "properties": {
+                      "is_enabled": {
+                        "type": "boolean"
+                      },
+                      "time": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success get user preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "string"
+                        },
+                        "language": {
+                          "type": "string"
+                        },
+                        "reminder_time": {
+                          "type": "object",
+                          "properties": {
+                            "is_enabled": {
+                              "type": "boolean"
+                            },
+                            "time": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Success get user preferences",
+                    "data": {
+                      "name": "Teme Wakaihasite",
+                      "email": "temewaki@gmail.com",
+                      "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg",
+                      "langauge": "en",
+                      "reminder_time": {
+                        "is_enabled": true,
+                        "time": "22:00:00+7"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User preference input doesn't meet validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "validation": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Registration input doesn't meet validation",
+                  "validation": {
+                    "name": "must be at least 3 characters long",
+                    "email": "invalid email format",
+                    "photo": "file isn't allowed",
+                    "language": "must be 2 characters long",
+                    "reminder_time": {
+                      "is_enabled": "must be boolean value",
+                      "time": "is not valid time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User account is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "User account is not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Get all articles data",
+        "description": "Fetch all articles from all resources",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get all articles data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array"
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Success get all articles data",
+                    "data": [
+                      {
+                        "id": 1,
+                        "title": "Macam-Macam Infeksi Mata dan Cara Mengatasinya",
+                        "image": "https://res.cloudinary.com/dk0z4ums3/image/upload/v1643876609/attached_image/macam-macam-infeksi-mata.jpg",
+                        "intro_text": "Ada berbagai jenis infeksi mata, mulai dari yang ringan hingga berat. Kondisi ini pun juga bisa disebabkan oleh banyak hal."
+                      },
+                      {
+                        "id": 2,
+                        "title": "Mata Merah",
+                        "image": "https://res.cloudinary.com/dk0z4ums3/image/upload/v1665376510/attached_image/mata-merah-0-alodokter.jpg",
+                        "intro_text": "Mata merah adalah kondisi ketika bagian putih mata berwarna merah. Warna merah yang terlihat bisa berupa pembuluh darah yang melebar atau bercak seperti darah."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/{id}": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Get detail article by id",
+        "description": "Get detail from an article",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the article to get",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get article by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Success get all articles data",
+                    "data": {
+                      "id": 1,
+                      "title": "Macam-Macam Infeksi Mata dan Cara Mengatasinya",
+                      "image": "https://res.cloudinary.com/dk0z4ums3/image/upload/v1643876609/attached_image/macam-macam-infeksi-mata.jpg",
+                      "content": "<ul><li>Virus</li><li>Bakteri</li><li>Jamur</li><li>Parasit</li></ul>",
+                      "source": "https://www.alodokter.com/macam-macam-infeksi-mata-dan-cara-mengatasinya"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Article is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Article is not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/predicts": {
+      "post": {
+        "tags": [
+          "Predicts"
+        ],
+        "summary": "Get machine learning predicts result",
+        "description": "Predicts result based on various parameter",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "photo",
+                  "answers"
+                ],
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "answers": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success process prediction result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "prediction_result": {
+                          "type": "string"
+                        },
+                        "accuracy_in_percent": {
+                          "type": "number"
+                        },
+                        "characteristics": {
+                          "type": "array"
+                        },
+                        "symptons": {
+                          "type": "array"
+                        },
+                        "treatments": {
+                          "type": "array"
+                        },
+                        "preventions": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Success process ML prediction result.",
+                  "data": {
+                    "prediction_result": "Bintititan/Stye",
+                    "accuracy_in_percent": 72,
+                    "characteristics": [
+                      "Supporting line text lorem ipsum dolor sit amet.",
+                      "Supporting line text lorem ipsum dolor sit amet."
+                    ],
+                    "symptons": [
+                      "Supporting line text lorem ipsum dolor sit amet.",
+                      "Supporting line text lorem ipsum dolor sit amet."
+                    ],
+                    "treatments": [
+                      "Supporting line text lorem ipsum dolor sit amet.",
+                      "Supporting line text lorem ipsum dolor sit amet."
+                    ],
+                    "preventions": [
+                      "Supporting line text lorem ipsum dolor sit amet.",
+                      "Supporting line text lorem ipsum dolor sit amet."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Prediction input doesn't meet validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "validation": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Prediction parameter input doesn't meet validation",
+                  "validation": {
+                    "photo": "photo format is not allowed.",
+                    "answers": "anwers is not complete yet."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/histories": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "summary": "Get histories of machine learning predicts result",
+        "description": "Fetch all histories of predicts result by user account",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user_id"
+                ],
+                "properties": {
+                  "user_id": {
+                    "type": "number"
+                  }
+                }
+              },
+              "example": {
+                "user_id": 10
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success get all predict histories data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array"
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Success get all predict histories data",
+                    "data": [
+                      {
+                        "id": 1,
+                        "photo_url": "https://awsimages.detik.net.id/community/media/visual/2023/02/21/ilustrasi-seseorang-dengan-mata-bintitan_169.jpeg?w=1200",
+                        "prediction_result": "Bintititan/Stye",
+                        "accuracy_in_percent": 72
+                      },
+                      {
+                        "id": 2,
+                        "photo_url": "https://awsimages.detik.net.id/community/media/visual/2023/02/21/ilustrasi-seseorang-dengan-mata-bintitan_169.jpeg?w=1200",
+                        "prediction_result": "Bintititan/Stye",
+                        "accuracy_in_percent": 72
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User id is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "validation": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "User id doesn't meet validation",
+                  "validation": {
+                    "name": "User id must be filled."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "History"
+        ],
+        "summary": "Store history of machine learning predicts result",
+        "description": "Save predicts result by user account",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user_id",
+                  "photo",
+                  "answers",
+                  "prediction_result",
+                  "accuracy_in_percent",
+                  "characteristics",
+                  "symptons",
+                  "treatments",
+                  "preventions"
+                ],
+                "properties": {
+                  "user_id":{
+                    "type": "number"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "prediction_result": {
+                    "type": "string"
+                  },
+                  "accuracy_in_percent": {
+                    "type": "number"
+                  },
+                  "characteristics": {
+                    "type": "array"
+                  },
+                  "symptons": {
+                    "type": "array"
+                  },
+                  "treatments": {
+                    "type": "array"
+                  },
+                  "preventions": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success save new history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "success",
+                  "message": "New history result is stored"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/histories/{id}": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "summary": "Get history detail of machine learning predicts result",
+        "description": "Fetch history detail of predicts result by history id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the article to get",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get predict histories by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "photo_url": {
+                          "type": "string"
+                        },
+                        "prediction_result": {
+                          "type": "string"
+                        },
+                        "accuracy_in_percent": {
+                          "type": "number"
+                        },
+                        "characteristics": {
+                          "type": "array"
+                        },
+                        "symptons": {
+                          "type": "array"
+                        },
+                        "treatments": {
+                          "type": "array"
+                        },
+                        "preventions": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Success get predict history by id",
+                    "data": {
+                      "id": 1,
+                      "photo_url": "https://awsimages.detik.net.id/community/media/visual/2023/02/21/ilustrasi-seseorang-dengan-mata-bintitan_169.jpeg?w=1200",
+                      "prediction_result": "Bintititan/Stye",
+                      "accuracy_in_percent": 72,
+                      "characteristics": [
+                        "Supporting line text lorem ipsum dolor sit amet.",
+                        "Supporting line text lorem ipsum dolor sit amet."
+                      ],
+                      "symptons": [
+                        "Supporting line text lorem ipsum dolor sit amet.",
+                        "Supporting line text lorem ipsum dolor sit amet."
+                      ],
+                      "treatments": [
+                        "Supporting line text lorem ipsum dolor sit amet.",
+                        "Supporting line text lorem ipsum dolor sit amet."
+                      ],
+                      "preventions": [
+                        "Supporting line text lorem ipsum dolor sit amet.",
+                        "Supporting line text lorem ipsum dolor sit amet."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Unauthorized request. Please provide the bearer token."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "History id is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "validation": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "History id is not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Internal server error. Please contact the developer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

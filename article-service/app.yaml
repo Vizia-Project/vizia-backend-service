@@ -1,0 +1,6 @@
+runtime: nodejs20
+service: article-service
+
+env_variables:
+  NODE_ENV=development
+  PORT=3001
