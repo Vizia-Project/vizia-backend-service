@@ -304,88 +304,6 @@
         }
       }
     },
-    "/logout": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Logging out user account",
-        "description": "Delete user credential from client and invalidate token",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success logging out account",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "success",
-                  "message": "Success logging out user account"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized request response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "failed",
-                  "message": "Unauthorized request. Please provide the bearer token."
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "failed",
-                  "message": "Internal server error. Please contact the developer"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/user/{id}": {
       "get": {
         "tags": [
@@ -434,20 +352,6 @@
                         },
                         "photo": {
                           "type": "string"
-                        },
-                        "language": {
-                          "type": "string"
-                        },
-                        "reminder_time": {
-                          "type": "object",
-                          "properties": {
-                            "is_enabled": {
-                              "type": "boolean"
-                            },
-                            "time": {
-                              "type": "string"
-                            }
-                          }
                         }
                       }
                     }
@@ -458,12 +362,7 @@
                     "data": {
                       "name": "Teme Wakaihasite",
                       "email": "temewaki@gmail.com",
-                      "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg",
-                      "langauge": "en",
-                      "reminder_time": {
-                        "is_enabled": true,
-                        "time": "22:00:00+7"
-                      }
+                      "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg"
                     }
                   }
                 }
@@ -576,20 +475,6 @@
                   "photo": {
                     "type": "string",
                     "format": "binary"
-                  },
-                  "language": {
-                    "type": "string"
-                  },
-                  "reminder_time": {
-                    "type": "object",
-                    "properties": {
-                      "is_enabled": {
-                        "type": "boolean"
-                      },
-                      "time": {
-                        "type": "string"
-                      }
-                    }
                   }
                 }
               }
@@ -621,20 +506,6 @@
                         },
                         "photo": {
                           "type": "string"
-                        },
-                        "language": {
-                          "type": "string"
-                        },
-                        "reminder_time": {
-                          "type": "object",
-                          "properties": {
-                            "is_enabled": {
-                              "type": "boolean"
-                            },
-                            "time": {
-                              "type": "string"
-                            }
-                          }
                         }
                       }
                     }
@@ -645,12 +516,7 @@
                     "data": {
                       "name": "Teme Wakaihasite",
                       "email": "temewaki@gmail.com",
-                      "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg",
-                      "langauge": "en",
-                      "reminder_time": {
-                        "is_enabled": true,
-                        "time": "22:00:00+7"
-                      }
+                      "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg"
                     }
                   }
                 }
@@ -681,12 +547,7 @@
                   "validation": {
                     "name": "must be at least 3 characters long",
                     "email": "invalid email format",
-                    "photo": "file isn't allowed",
-                    "language": "must be 2 characters long",
-                    "reminder_time": {
-                      "is_enabled": "must be boolean value",
-                      "time": "is not valid time"
-                    }
+                    "photo": "file isn't allowed"
                   }
                 }
               }
@@ -773,6 +634,17 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "description": "Page number of the article collection to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success get all articles data",
@@ -796,16 +668,16 @@
                     "message": "Success get all articles data",
                     "data": [
                       {
-                        "id": 1,
                         "title": "Macam-Macam Infeksi Mata dan Cara Mengatasinya",
                         "image": "https://res.cloudinary.com/dk0z4ums3/image/upload/v1643876609/attached_image/macam-macam-infeksi-mata.jpg",
-                        "intro_text": "Ada berbagai jenis infeksi mata, mulai dari yang ringan hingga berat. Kondisi ini pun juga bisa disebabkan oleh banyak hal."
+                        "description": "Infeksi mata adalah penyakit akibat bakteri, virus, maupun jamur yang menyerang bagian-bagian mata. Infeksi pada mata dapat terjadi pada setiap bagian mata, mulai dari bagian paling luar hingga bagian paling dalamnya. Infeksi mata merupakan penyakit yang dapat menyerang siapa saja. Kondisi ini...",
+                        "source_url": "https://www.alodokter.com/infeksi-mata"
                       },
                       {
-                        "id": 2,
                         "title": "Mata Merah",
                         "image": "https://res.cloudinary.com/dk0z4ums3/image/upload/v1665376510/attached_image/mata-merah-0-alodokter.jpg",
-                        "intro_text": "Mata merah adalah kondisi ketika bagian putih mata berwarna merah. Warna merah yang terlihat bisa berupa pembuluh darah yang melebar atau bercak seperti darah."
+                        "description": "Ada berbagai jenis infeksi mata, mulai dari yang ringan hingga berat. Kondisi ini pun juga bisa disebabkan oleh banyak hal. Meski tidak semua infeksi mata berbahaya, Anda tetap perlu mewaspadai kondisi ini. Infeksi mata umumnya ditandai dengan mata merah, terasa sakit, berair, belekan,...",
+                        "source_url": "https://www.alodokter.com/macam-macam-infeksi-mata-dan-cara-mengatasinya"
                       }
                     ]
                   }
@@ -860,12 +732,12 @@
         }
       }
     },
-    "/articles/{id}": {
+    "/articles/detail": {
       "get": {
         "tags": [
           "Article"
         ],
-        "summary": "Get detail article by id",
+        "summary": "Get detail article by url",
         "description": "Get detail from an article",
         "security": [
           {
@@ -874,12 +746,12 @@
         ],
         "parameters": [
           {
-            "in": "path",
-            "name": "id",
+            "in": "query",
+            "name": "url",
             "required": true,
-            "description": "Numeric ID of the article to get",
+            "description": "String url of the article to get",
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
@@ -900,9 +772,6 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "id": {
-                          "type": "string"
-                        },
                         "title": {
                           "type": "string"
                         },
@@ -910,9 +779,6 @@
                           "type": "string"
                         },
                         "content": {
-                          "type": "string"
-                        },
-                        "source": {
                           "type": "string"
                         }
                       }
@@ -922,13 +788,33 @@
                     "status": "success",
                     "message": "Success get all articles data",
                     "data": {
-                      "id": 1,
                       "title": "Macam-Macam Infeksi Mata dan Cara Mengatasinya",
                       "image": "https://res.cloudinary.com/dk0z4ums3/image/upload/v1643876609/attached_image/macam-macam-infeksi-mata.jpg",
-                      "content": "<ul><li>Virus</li><li>Bakteri</li><li>Jamur</li><li>Parasit</li></ul>",
-                      "source": "https://www.alodokter.com/macam-macam-infeksi-mata-dan-cara-mengatasinya"
+                      "content": "<div class=\"post-content\" id=\"postContent\" data-id=\"65e9254dc3cb35002400f15e\">           <p><strong>Infeksi mata adalah penyakit akibat bakteri, virus, maupun jamur yang menyerang bagian-bagian mata. Infeksi pada mata dapat terjadi pada setiap bagian mata, mulai dari bagian paling luar hingga bagian paling dalamnya.</strong></p> <p>Infeksi mata merupakan penyakit yang dapat menyerang siapa saja. Kondisi ini bisa menimbulkan gejala, seperti mata merah, gatal, nyeri, atau berair. Infeksi mata umumnya terjadi akibat penularan dari orang lain. Namun, kurangnya kebersihan mata dan area di sekitarnya juga bisa menyebabkan infeksi mata.</p> <p><img class=\"alignnone size-full wp-image-1893745\" src=\"https://res.cloudinary.com/dk0z4ums3/image/upload/v1709779631/attached_image/infeksi-mata-0-alodokter.jpg\" alt=\"InfeksiMata\" width=\"650\" height=\"433\"></p> <p>Infeksi mata ringan pada umumnya bisa sembuh dengan perawatan sederhana dan jarang menyebabkan komplikasi. Namun, bila tidak tertangani dengan baik dan memburuk, infeksi mata dapat menimbulkan komplikasi yang mengganggu penglihatan.</p> <h3><strong>Jenis-Jenis Infeksi Mata</strong></h3> <p>Infeksi mata bisa menyerang bagian-bagian mata dan jaringan di sekitarnya. Berikut ini adalah jenis-jenis infeksi mata berdasarkan bagian yang terinfeksi dan penyebabnya:</p> <ul> <li>Selulitis periorbital, yaitu infeksi bakteri yang terjadi pada jaringan kulit di sekitar mata, termasuk kelopak dan kantung mata.</li> <li> <a href=\"https://www.alodokter.com/selulitis-orbita\" target=\"_blank\">Selulitis orbital</a>, yaitu infeksi bakteri yang terjadi pada jaringan lunak di sekitar bola mata, termasuk otot yang menggerakkan mata.</li> <li> <a href=\"https://www.alodokter.com/blefaritis\" target=\"_blank\">Blefaritis</a>, yaitu infeksi dan peradangan pada kelopak mata.</li> <li> <a href=\"https://www.alodokter.com/bintitan\" target=\"_blank\">Bintitan</a>, yaitu infeksi bakteri yang menyebabkan penyumbatan dan peradangan pada kelenjar minyak di pinggir kelopak mata.</li> <li> <em>Dacryocystitis</em>, yaitu infeksi pada kelenjar air mata yang terjadi akibat sumbatan pada kelenjar ini.</li> <li> <a href=\"https://www.alodokter.com/konjungtivitis\" target=\"_blank\">Konjungtivitis</a>, yaitu infeksi virus atau bakteri yang terjadi pada bagian dalam kelopak mata dan bagian putih mata (konjungtiva).</li> <li> <a href=\"https://www.alodokter.com/keratitis\" target=\"_blank\">Keratitis</a>, yaitu peradangan dan infeksi yang menyerang kornea mata.</li> <li> <a href=\"https://www.alodokter.com/uveitis\" target=\"_blank\">Uveitis</a>, yaitu infeksi yang menyebabkan peradangan pada lapisan mata yang mengandung pembuluh darah, termasuk iris (bagian mata yang berwarna).</li> <li> <a href=\"https://www.alodokter.com/endoftalmitis\" target=\"_blank\">Endoftalmitis</a>, yaitu infeksi yang menyerang jaringan dan cairan yang mengisi bola mata.</li> <li>Retinitis, yaitu peradangan pada retina mata yang disebabkan oleh infeksi bakteri, virus, maupun jamur.</li> <li>Panophtalmitis, yaitu infeksi yang menyerang seluruh bagian mata secara sekaligus.</li> </ul> <h3><strong>Penyebab Infeksi Mata</strong></h3> <p>Infeksi mata bisa disebabkan oleh bakteri, virus, jamur, atau parasit. Mikroorganisme tersebut dapat menyerang mata, serta jaringan di sekitarnya sehingga menyebabkan infeksi dan peradangan.</p> <p>Berikut ini adalah contoh-contoh organisme yang dapat menyebabkan infeksi mata:</p> <h4><strong>Bakteri</strong></h4> <p>Infeksi mata akibat bakteri bisa berasal dari kontak dengan tangan atau benda yang terkontaminasi bakteri. Infeksi mata ini juga bisa terjadi melalui hubungan seks atau dari ibu ke anak. Jenis bakteri yang dapat menyebabkan infeksi mata antara lain:</p> <ul> <li> <em>Chlamydia trachomatis </em>(<a href=\"https://www.alodokter.com/trakhoma\" target=\"_blank\">trakoma</a>)</li> <li><em>Enterobacteriaceae</em></li> <li><em>Haemophilus influenza</em></li> <li><em>Moraxella catarrhalis</em></li> <li><em>Neisseria gonorrhoeae</em></li> <li> <a href=\"https://www.alodokter.com/kenali-bahaya-bakteri-staphylococcus-aureus\" target=\"_blank\"><em>Staphylococcus aureus</em></a><em> (S. aureus)</em> </li> <li><em>Streptococcus pneumoniae (S. pneumoniae)</em></li> </ul> <h4><strong>Virus</strong></h4> <p>Virus bisa menyebar melalui kontak antara mata dengan tangan yang terkontaminasi virus, misalnya akibat memegang benda kotor atau kontak dengan seseorang yang sedang mengalami infeksi mata.</p> <p>Infeksi mata akibat virus juga dapat menular melalui batuk atau bersin seseorang yang sedang mengalami infeksi ini. Selain itu, virus di bagian tubuh lain juga bisa menyebar ke mata dan menyebabkan infeksi.</p> <p>Beberapa jenis virus yang sering menyebabkan infeksi mata adalah:</p> <ul> <li>Adenovirus</li> <li>Virus varicella zoster (<a href=\"https://www.alodokter.com/herpes-zoster\" target=\"_blank\">herpes zoster</a>)</li> <li>Virus herpes simplex (<a href=\"https://www.alodokter.com/herpes-mata\" target=\"_blank\">herpes mata</a>)</li> <li> <a href=\"https://www.alodokter.com/cytomegalovirus\" target=\"_blank\">Cytomegalovirus</a> (CMV)</li> <li>Virus Rubeola (penyebab <a href=\"https://www.alodokter.com/campak\" target=\"_blank\">campak</a>)</li> </ul> <h4><strong>Jamur</strong></h4> <p>Infeksi jamur mata biasanya disebabkan oleh luka atau cedera pada mata yang kemudian terkontaminasi. Jamur <em>Candida</em> merupakan spesies jamur yang paling sering menyebabkan infeksi mata. Selain itu, spesies jamur <em>Fusarium</em> dan <em>Aspergillus</em> juga dapat menginfeksi mata.</p> <h4><strong>Parasit</strong></h4> <p>Infeksi mata akibat parasit lebih jarang terjadi daripada infeksi lainnya. Parasit yang bisa menginfeksi mata contohnya adalah protozoa <em>Acanthamoeba</em>. Infeksi ini biasanya terjadi akibat penggunaan lensa kontak yang terkontaminasi parasit dari air yang kotor.</p> <h3><strong>Faktor risiko infeksi mata</strong></h3> <p>Beberapa kebiasaan yang bisa meningkatkan risiko seseorang terserang infeksi mata adalah:</p> <ul> <li>Tidak rutin mencuci tangan</li> <li>Kebiasaan menyentuh atau mengucek mata</li> <li>Tidak menjaga kebersihan lensa kontak</li> <li>Tidur menggunakan lensa kontak</li> <li>Menggunakan lensa kontak saat berenang</li> <li>Memakai alat <em>make up</em> mata yang tidak higienis</li> <li>Meminjam atau meminjamkan alat <em>make up </em>mata</li> <li>Baru menjalani operasi mata</li> </ul> <h3><strong>Gejala Infeksi Mata</strong></h3> <p>Meskipun penyebabnya berbeda, tetapi infeksi mata memiliki gejala yang mirip. Berikut adalah gejala yang bisa muncul saat seseorang mengalami infeksi mata:</p> <ul> <li><a href=\"https://www.alodokter.com/mata-merah\" target=\"_blank\">Mata merah</a></li> <li>Mata berair</li> <li>Gatal</li> <li>Belekan</li> <li>Mata terasa mengganjal</li> <li>Perih</li> <li>Bengkak dan nyeri di kelopak mata</li> <li>Bintik di pinggiran kelopak mata</li> <li>Pandangan bisa buram tetapi bisa juga tidak</li> </ul> <h4><strong>Kapan harus ke dokter</strong></h4> <p>Periksakan diri Anda ke <a href=\"https://www.alodokter.com/cari-dokter/dokter-mata/\" target=\"_blank\">dokter</a> bila mengalami gejala infeksi mata yang sudah disebutkan di atas. Pemeriksaan sedini mungkin diperlukan agar infeksi mata yang Anda alami diketahui penyebabnya dan bisa ditangani dengan tepat.</p> <p>Jangan tunda ke dokter jika gejala infeksi mata disertai dengan:</p> <ul> <li>Tidak bisa membuka mata</li> <li>Nyeri saat menggerakkan mata</li> <li>Nyeri mata bahkan saat tidak sedang digerakkan</li> <li>Bintik-bintik hitam yang melayang-layang di lapang pandang (<a href=\"https://www.alodokter.com/floaters\" target=\"_blank\">floaters</a>)</li> <li>Gangguan penglihatan dan mata lebih sensitif terhadap cahaya</li> <li>Lapang pandang menyempit</li> <li>Kondisi yang melemahkan daya tahan tubuh, seperti kemoterapi atau <a href=\"https://www.alodokter.com/hiv-aids\" target=\"_blank\">HIV/AIDS</a> </li> <li>Riwayat operasi mata dalam kurun waktu 1–2 minggu sebelumnya</li> </ul> <h3><strong>Diagnosis Infeksi Mata</strong></h3> <p>Untuk menentukan diagnosis infeksi mata, dokter akan melakukan tanya jawab mengenai hal-hal berikut:</p> <ul> <li>Gejala yang dialami</li> <li>Penyakit yang pernah atau sedang diderita</li> <li>Obat-obatan yang rutin dikonsumsi</li> </ul> <p>Setelah itu, dokter akan melakukan pemeriksaan pada mata, mulai dari bagian depan hingga ke bagian dalamnya.</p> <p>Dokter mungkin juga akan mengambil sampel cairan yang keluar dari mata Anda untuk memeriksa penyebab infeksi yang terjadi. Bila diperlukan, dokter juga akan meminta pasien menjalani pemeriksaan tambahan, seperti tes darah, foto Rontgen, atau MRI mata.</p> <h3><strong>Pengobatan Infeksi Mata</strong></h3> <p>Infeksi mata yang ringan dan hanya mengenai permukaan mata, seperti konjungtivitis, pada umumnya bisa membaik setelah 1–2 minggu dengan terapi mandiri di rumah. Lakukanlah beberapa hal berikut ini agar infeksi mata mereda:</p> <ul> <li>Kompres mata dengan air hangat beberapa kali sehari</li> <li>Gunakan air mata buatan agar mata tidak kering</li> <li>Jangan menggunakan lensa kontak selama mata masih merah</li> <li>Gunakan kacamata untuk melindungi mata dari iritan, seperti debu</li> <li>Bersihkan belek yang muncul dengan menggunakan tisu yang dibasahi air hangat</li> </ul> <p>Anda juga bisa menggunakan obat pereda nyeri yang dijual bebas, seperti paracetamol dan ibuprofen, untuk meringankan rasa sakit, bengkak, serta kemerahan pada mata yang terinfeksi.</p> <p>Bila infeksi mata yang Anda alami tidak juga membaik dengan perawatan mandiri, dokter akan memberikan obat-obatan yang jenisnya disesuaikan dengan penyebab infeksinya. Obat tersebut bisa berupa obat tetes mata atau salep mata.</p> <p>Obat-obatan yang dapat diresepkan oleh dokter antara lain:</p> <ul> <li>Antibiotik, seperti <a href=\"https://www.alodokter.com/levofloxacin-tetes-mata\" target=\"_blank\">levofloxacin</a> dan <a href=\"https://www.alodokter.com/ofloxacin-tetes-mata\" target=\"_blank\">ofloxacin</a>, untuk mengatasi infeksi bakteri di mata.</li> <li>Antivirus, misalnya <a href=\"https://www.alodokter.com/acyclovir-topical\" target=\"_blank\">acyclovir</a>, digunakan untuk mengatasi infeksi virus, seperti herpes.</li> <li>Antijamur, contohnya <a href=\"https://www.alodokter.com/natamycin\" target=\"_blank\">natamycin</a> dan amphotericin B, untuk menangani infeksi mata akibat jamur.</li> </ul> <p>Dokter juga bisa meresepkan obat minum bila infeksi mata tidak membaik setelah diobati dengan obat tetes dan salep mata. Jika mata yang terinfeksi tidak kunjung membaik setelah diberikan obat-obatan atau terjadi infeksi yang parah, <a href=\"https://www.alodokter.com/mengenal-lebih-dekat-dokter-mata-ahli-rekonstruksi\" target=\"_blank\">dokter mata ahli rekonstruksi</a> dapat melakukan operasi untuk menanganinya.</p> <h3><strong>Komplikasi Infeksi Mata</strong></h3> <p>Meskipun jarang terjadi, infeksi mata yang tidak diobati hingga tuntas dapat menyebabkan komplikasi di bawah ini:</p> <ul> <li>Perubahan bentuk kelopak mata karena terbentuknya jaringan parut setelah peradangan</li> <li>Kornea terluka (<a href=\"https://www.alodokter.com/ulkus-kornea\" target=\"_blank\">ulkus kornea</a>) atau berlubang</li> <li>Gangguan penglihatan atau kebutaan permanen</li> <li>Kerusakan total pada bola mata sehingga bola mata harus diangkat</li> </ul> <h3><strong>Pencegahan Infeksi Mata</strong></h3> <p>Ada upaya-upaya yang bisa dilakukan untuk mencegah infeksi mata, di antaranya:</p> <ul> <li>Sering mencuci tangan, terutama sebelum memegang area sekitar mata</li> <li>Membersihkan kaca mata atau lensa kontak sebelum dan setelah memakainya</li> <li>Melepas lensa kontak sebelum tidur, mandi, maupun berenang</li> <li>Menghapus <em>make up</em> setelah beraktivitas</li> <li>Menghindari kontak dengan orang yang sedang mengalami infeksi mata</li> <li>Tidak berbagi handuk atau alat <em>make up</em> dengan orang lain</li> <li>Mengganti kosmetik yang digunakan jika mengalami infeksi mata agar penyakit ini tidak kambuh</li> </ul>       </div>"
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Url must be filled in query parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "failed",
+                  "message": "Please provide source url in query parameter."
                 }
               }
             }
@@ -951,28 +837,6 @@
                 "example": {
                   "status": "failed",
                   "message": "Unauthorized request. Please provide the bearer token."
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Article is not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "failed",
-                  "message": "Article is not found"
                 }
               }
             }
@@ -1355,7 +1219,7 @@
                   "preventions"
                 ],
                 "properties": {
-                  "user_id":{
+                  "user_id": {
                     "type": "number"
                   },
                   "photo": {

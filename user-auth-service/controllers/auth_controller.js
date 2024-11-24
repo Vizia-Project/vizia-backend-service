@@ -160,6 +160,4 @@ const login = async (request, h) => {
   }
 };
 
-const logout = async (request, h) => {};
-
-module.exports = { register, login, logout };
+module.exports = { register, login };

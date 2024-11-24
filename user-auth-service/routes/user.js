@@ -1,12 +1,26 @@
-const { getUser } = require("../controllers/user_controller");
+const { getUser, updateUser } = require("../controllers/user_controller");
 
 const userRoutes = [
   {
     method: "GET",
-    path: "/user",
+    path: "/user/{id}",
     options: {
       auth: "jwt",
       handler: getUser,
+    },
+  },
+  {
+    method: "PUT",
+    path: "/user/{id}",
+    options: {
+      auth: "jwt",
+      handler: updateUser,
+      payload: {
+        output: 'stream',
+        parse: true,
+        multipart: true,
+        allow: "multipart/form-data"
+      }
     },
   },
 ];
