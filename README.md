@@ -33,6 +33,6 @@ Untuk folder database-migrator dan default-service bisa diabaikan saja, karena i
 
 3. Begitu pula untuk file `app.example.yaml`. Duplicate atau copy/paste file `app.example.yaml` dan ganti nama file menjadi `app.yaml` sehingga nantinya ada 2 file `app.example.yaml` dan `app.yaml`. Isikan credential variabel yang sudah tertera pada pada `app.yaml`.
 
-4. Khusus untuk direktori /user-auth-service, jangan lupa membuat service key dari google cloud platform dan mengunduhnya berupa file json, lalu beri nama `vizia-sa.json`.
+4. Khusus untuk direktori /user-auth-service dan /history-service, jangan lupa membuat service key dari google cloud platform dan mengunduhnya berupa file json, lalu beri nama `vizia-sa.json`.
 
 5. Jika bingung silahkan tanyakan pada developer.

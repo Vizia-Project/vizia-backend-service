@@ -80,7 +80,7 @@ const updateUser = async (request, h) => {
     if (photo) {
       const gcsname = Date.now().toString();
 
-      await bucket.file(gcsname).save(photo, {
+      await bucket.file("user-photos/" + gcsname).save(photo, {
         metadata: {
           contentType: "image/jpeg",
         },

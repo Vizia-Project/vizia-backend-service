@@ -1055,27 +1055,17 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "user_id"
-                ],
-                "properties": {
-                  "user_id": {
-                    "type": "number"
-                  }
-                }
-              },
-              "example": {
-                "user_id": 10
-              }
+        "parameters": [
+          {
+            "in": "query",
+            "name": "user_id",
+            "required": true,
+            "description": "Numeric id of the user to get",
+            "schema": {
+              "type": "number"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Success get all predict histories data",
@@ -1210,13 +1200,8 @@
                 "required": [
                   "user_id",
                   "photo",
-                  "answers",
                   "prediction_result",
-                  "accuracy_in_percent",
-                  "characteristics",
-                  "symptons",
-                  "treatments",
-                  "preventions"
+                  "accuracy_in_percent"
                 ],
                 "properties": {
                   "user_id": {
@@ -1231,18 +1216,6 @@
                   },
                   "accuracy_in_percent": {
                     "type": "number"
-                  },
-                  "characteristics": {
-                    "type": "array"
-                  },
-                  "symptons": {
-                    "type": "array"
-                  },
-                  "treatments": {
-                    "type": "array"
-                  },
-                  "preventions": {
-                    "type": "array"
                   }
                 }
               }

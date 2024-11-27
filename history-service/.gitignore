@@ -1,3 +1,5 @@
 /node_modules
 
 .env
+vizia-sa.json
+app.yaml

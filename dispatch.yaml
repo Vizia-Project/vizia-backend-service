@@ -1,0 +1,9 @@
+# dispatch:
+#   - url: "your-custom-domain.com/*"
+#     service: default
+
+#   - url: "your-custom-domain.com/service-1/*"
+#     service: service-1
+
+#   - url: "your-custom-domain.com/service-2/*"
+#     service: service-2

@@ -1,6 +1,7 @@
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 
+require("dotenv").config();
 const pathKey = path.resolve("./vizia-sa.json");
 
 const gcs = new Storage({
@@ -12,7 +13,12 @@ const bucketName = process.env.GOOGLE_CLOUD_BUCKET_NAME;
 const bucket = gcs.bucket(bucketName);
 
 const getPublicUrl = (filename) => {
-  return "https://storage.googleapis.com/" + bucketName + "/user-photos/" + filename;
+  return (
+    "https://storage.googleapis.com/" +
+    bucketName +
+    "/eye-photos/saved/" +
+    filename
+  );
 };
 
 module.exports = { bucket, bucketName, getPublicUrl };

@@ -1,0 +1,17 @@
+runtime: nodejs20
+service: history-service
+
+env_variables: 
+  NODE_ENV: production
+  PORT: 8080
+
+  DB_HOST: 
+  DB_PORT: 
+  DB_USER: 
+  DB_PASSWORD: 
+  DB_NAME: 
+
+  JWT_SECRET: 
+
+  GOOGLE_CLOUD_PROJECT_ID: 
+  GOOGLE_CLOUD_BUCKET_NAME: 
