@@ -45,4 +45,12 @@ const unauthorizedPreResponseCallback = (request, h) => {
   return h.continue;
 };
 
-module.exports = { jwtScheme, unauthorizedPreResponseCallback };
+const jwtPayload = {
+  iss: "1037967286998-compute@developer.gserviceaccount.com",
+  sub: "1037967286998-compute@developer.gserviceaccount.com",
+  aud: "https://vizia-d8u2x8eu.an.gateway.dev",
+  iat: Math.floor(Date.now() / 1000),
+  exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 10, // 168h
+};
+
+module.exports = { jwtScheme, unauthorizedPreResponseCallback, jwtPayload };

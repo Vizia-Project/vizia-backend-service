@@ -12,12 +12,12 @@ const init = async () => {
     routes: { cors: { origin: ["*"] } },
   });
 
-  server.auth.scheme("jwtScheme", jwtScheme);
-  server.auth.strategy("jwt", "jwtScheme");
+  // server.auth.scheme("jwtScheme", jwtScheme);
+  // server.auth.strategy("jwt", "jwtScheme");
 
   server.route([...historyRoutes]);
 
-  server.ext("onPreResponse", unauthorizedPreResponseCallback);
+  // server.ext("onPreResponse", unauthorizedPreResponseCallback);
 
   await server.start();
   console.log(`Server running at ${server.info.uri}`);

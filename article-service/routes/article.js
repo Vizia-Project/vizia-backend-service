@@ -7,18 +7,12 @@ const articleRoutes = [
   {
     method: "GET",
     path: "/articles",
-    options: {
-      auth: "jwt",
-      handler: getArticles,
-    },
+    handler: getArticles,
   },
   {
     method: "GET",
     path: "/articles/detail",
-    options: {
-      auth: "jwt",
-      handler: getArticleByUrl,
-    },
+    handler: getArticleByUrl,
   },
 ];
 

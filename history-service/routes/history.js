@@ -8,24 +8,17 @@ const historyRoutes = [
   {
     method: "GET",
     path: "/histories",
-    options: {
-      auth: "jwt",
-      handler: getHistories,
-    },
+    handler: getHistories,
   },
   {
     method: "GET",
     path: "/histories/{id}",
-    options: {
-      auth: "jwt",
-      handler: getHistoryById,
-    },
+    handler: getHistoryById,
   },
   {
     method: "POST",
     path: "/histories",
     options: {
-      auth: "jwt",
       handler: addHistory,
       payload: {
         output: 'stream',

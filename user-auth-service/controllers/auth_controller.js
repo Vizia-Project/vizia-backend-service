@@ -5,6 +5,7 @@ const {
   registerValidation,
   loginValidation,
 } = require("../validations/auth_validation");
+// const { jwtPayload } = require("../config/auth");
 
 const getUserById = async (user_id) => {
   try {
@@ -51,9 +52,7 @@ const register = async (request, h) => {
     );
 
     // Generate jwt for bearer authentication
-    const token = jwt.sign({ id: result.insertId }, process.env.JWT_SECRET, {
-      expiresIn: "168h",
-    });
+    // const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
 
     // Get and mapping user schema for response
     const user = await getUserById(result.insertId);
@@ -63,7 +62,7 @@ const register = async (request, h) => {
         name: user.name,
         email: user.email,
         photo_url: user.photo_url,
-        token: token,
+        // token: token,
       };
     });
 
@@ -127,9 +126,7 @@ const login = async (request, h) => {
     }
 
     // Generate jwt for bearer authentication
-    const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, {
-      expiresIn: "168h",
-    });
+    // const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
 
     // Mapping user schema for response
     const mappedUser = user.map((user) => {
@@ -138,7 +135,7 @@ const login = async (request, h) => {
         name: user.name,
         email: user.email,
         photo_url: user.photo_url,
-        token: token,
+        // token: token,
       };
     });
 

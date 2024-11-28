@@ -1,0 +1,159 @@
+# openapi2-appengine.yaml
+swagger: "2.0"
+info:
+  title: vizia
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /login:
+    post:
+      summary: Login by email and password
+      operationId: Loginbyemailandpassword
+      x-google-backend:
+        address: https://user-auth-service-dot-vizia-441603.et.r.appspot.com/login
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+      responses:
+        "200":
+          description: Success login and get user data
+          schema:
+            type: object
+  /register:
+    post:
+      summary: Create a new account
+      operationId: Createanewaccount
+      x-google-backend:
+        address: https://user-auth-service-dot-vizia-441603.et.r.appspot.com/register
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+      responses:
+        "201":
+          description: Success create new account
+          schema:
+            type: object
+  /user/{id}:
+    get:
+      summary: Get user account preferences
+      operationId: Getuseraccountpreferences
+      x-google-backend:
+        address: https://user-auth-service-dot-vizia-441603.et.r.appspot.com
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+          description: Numeric ID of the user to get
+      responses:
+        "200":
+          description: Success get user preferences
+          schema:
+            type: object
+    put:
+      summary: Update user account preferences
+      operationId: Updateuseraccountpreferences
+      x-google-backend:
+        address: https://user-auth-service-dot-vizia-441603.et.r.appspot.com
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+          description: Numeric ID of the user to get
+      responses:
+        "201":
+          description: Success update user preferences
+          schema:
+            type: object
+  /articles:
+    get:
+      summary: Get all articles data
+      operationId: Getallarticlesdata
+      x-google-backend:
+        address: https://article-service-dot-vizia-441603.et.r.appspot.com/articles
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+      parameters:
+        - name: page
+          in: query
+          required: true
+          type: string
+          description: Page number of the article collection to get
+      responses:
+        "200":
+          description: Success get all articles data
+          schema:
+            type: object
+  /articles/detail:
+    get:
+      summary: Get detail article by url
+      operationId: Getdetailarticlebyurl
+      x-google-backend:
+        address: https://article-service-dot-vizia-441603.et.r.appspot.com/articles/detail
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+      parameters:
+        - name: url
+          in: query
+          required: true
+          type: string
+          description: String url of the article to get
+      responses:
+        "200":
+          description: Success get all articles data
+          schema:
+            type: object
+  /histories:
+    get:
+      summary: Get histories of machine learning predicts result
+      operationId: Gethistoriesofmachinelearningpredictsresult
+      x-google-backend:
+        address: https://history-service-dot-vizia-441603.et.r.appspot.com/histories
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          type: number
+          format: double
+          description: Numeric id of the user to get
+      responses:
+        "200":
+          description: Success get all predict histories data
+          schema:
+            type: object
+    post:
+      summary: Store history of machine learning predicts result
+      operationId: Storehistoryofmachinelearningpredictsresult
+      x-google-backend:
+        address: https://history-service-dot-vizia-441603.et.r.appspot.com/histories
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+      responses:
+        "201":
+          description: Success save new history
+          schema:
+            type: object
+  /histories/{id}:
+    get:
+      summary: Get history detail of machine learning predicts result
+      operationId: Gethistorydetailofmachinelearningpredictsresult
+      x-google-backend:
+        address: https://history-service-dot-vizia-441603.et.r.appspot.com
+        jwt_audience: 1037967286998-9ol4s63jopsekblic5969oe0fogkdcti.apps.googleusercontent.com
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+          description: Numeric ID of the article to get
+      responses:
+        "200":
+          description: Success get predict histories by id
+          schema:
+            type: object

@@ -4,16 +4,12 @@ const userRoutes = [
   {
     method: "GET",
     path: "/user/{id}",
-    options: {
-      auth: "jwt",
-      handler: getUser,
-    },
+    handler: getUser,
   },
   {
     method: "PUT",
     path: "/user/{id}",
     options: {
-      auth: "jwt",
       handler: updateUser,
       payload: {
         output: 'stream',
