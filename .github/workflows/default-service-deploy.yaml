@@ -1,4 +1,4 @@
-name: Deploy default service to Google App Engine
+name: Deploy default service to Google Cloud Run
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: "google-github-actions/setup-gcloud@v2"
 
-      - name: Deploy to Google App Engine
+      - name: Deploy to Google Cloud Run
         run: |
           cd default-service
           gcloud run deploy vizia-web --source . --region asia-southeast2 --quiet
