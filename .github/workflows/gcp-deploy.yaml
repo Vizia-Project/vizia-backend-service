@@ -43,4 +43,3 @@ jobs:
       - name: Deploy to Google App Engine
         run: |
           gcloud app deploy app.yaml --quiet
-        working-directory: ./article-service
