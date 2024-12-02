@@ -42,4 +42,5 @@ jobs:
 
       - name: Deploy to Google App Engine
         run: |
+          cd article-service
           gcloud app deploy app.yaml --quiet
