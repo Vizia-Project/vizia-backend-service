@@ -1,19 +1,9 @@
-name: Deploy web services to Google App Engine
+name: Deploy history service to Google App Engine
 
 on:
-  # Push to 'release' branch
-  # push:
-  #   branches:
-  #     - release
-  # Closed pull reuqest on 'main' branch
-  # pull_request:
-  #   branches:
-  #     - main
-  #   types:
-  #     - closed
   push:
     paths:
-      - article-service/**
+      - history-service/**
 
 jobs:
   deployment:
@@ -29,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: ./article-service
+        working-directory: ./history-service
 
       - name: Google Cloud Auth
         uses: google-github-actions/auth@v2
@@ -42,5 +32,5 @@ jobs:
 
       - name: Deploy to Google App Engine
         run: |
-          cd article-service
+          cd history-service
           gcloud app deploy app.yaml --quiet
