@@ -61,7 +61,7 @@ const register = async (request, h) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        photo_url: user.photo_url,
+        // photo_url: user.photo_url,
         // token: token,
       };
     });
@@ -126,16 +126,14 @@ const login = async (request, h) => {
     }
 
     // Generate jwt for bearer authentication
-    // const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET);
 
     // Mapping user schema for response
     const mappedUser = user.map((user) => {
       return {
         id: user.id,
         name: user.name,
-        email: user.email,
-        photo_url: user.photo_url,
-        // token: token,
+        token: token,
       };
     });
 
