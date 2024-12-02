@@ -80,10 +80,7 @@
                         "name": {
                           "type": "string"
                         },
-                        "email": {
-                          "type": "string"
-                        },
-                        "photo": {
+                        "token": {
                           "type": "string"
                         }
                       }
@@ -96,8 +93,7 @@
                   "data": {
                     "id": 115,
                     "name": "Teme Wakaihasite",
-                    "email": "temewaki@gmail.com",
-                    "photo": "https://storage.googleapis.com/mahasiswa/mahasiswa_4a43980e-0915-4ee2-9c5b-2f0a8bcd0c8c.jpg"
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzMzMTQ5MDU0fQ.hvEdNo2eyOeuzkutt3XB2Ndkrsiv8g01s_eFO133dlA"
                   }
                 }
               }
@@ -212,9 +208,6 @@
                         },
                         "email": {
                           "type": "string"
-                        },
-                        "photo": {
-                          "type": "string"
                         }
                       }
                     }
@@ -226,8 +219,7 @@
                   "data": {
                     "id": 115,
                     "name": "Teme Wakaihasite",
-                    "email": "temewaki@gmail.com",
-                    "photo": null
+                    "email": "temewaki@gmail.com"
                   }
                 }
               }
