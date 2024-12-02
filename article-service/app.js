@@ -1,6 +1,6 @@
 const Hapi = require("@hapi/hapi");
 const articleRoutes = require("./routes/article");
-// const { jwtScheme, unauthorizedPreResponseCallback } = require("./config/auth");
+const { jwtScheme, unauthorizedPreResponseCallback } = require("./config/auth");
 
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
