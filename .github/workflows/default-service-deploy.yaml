@@ -33,4 +33,4 @@ jobs:
       - name: Deploy to Google App Engine
         run: |
           cd default-service
-          gcloud app deploy app.yaml --quiet
+          gcloud run deploy vizia-web --source . --region asia-southeast2 --quiet
