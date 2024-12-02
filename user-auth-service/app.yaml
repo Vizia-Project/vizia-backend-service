@@ -1,0 +1,17 @@
+runtime: nodejs20
+service: user-auth-service
+
+env_variables: 
+  NODE_ENV: production
+  PORT: 8080
+
+  DB_HOST: 34.101.161.198
+  DB_PORT: 3306
+  DB_USER: backend_sandbox
+  DB_PASSWORD: 3Y^.s.<VG788{As{
+  DB_NAME: vizia_db_sandbox
+
+  JWT_SECRET: ae53240a8791cd94183739854c94aa7fe071bd9ce6395489892c8e98f3d0e3a63dc18adf637fee8d188b2fc3240d650a3a114ccbc56451da733b00a8a4c00abe
+
+  GOOGLE_CLOUD_PROJECT_ID: vizia-441603
+  GOOGLE_CLOUD_BUCKET_NAME: vizia-global-storage
