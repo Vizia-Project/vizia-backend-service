@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Vizia API Docs - OpenAPI 3.0",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Backend REST API Documentation for Vizia Project"
   },
   "servers": [
