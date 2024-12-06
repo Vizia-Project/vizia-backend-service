@@ -6,11 +6,12 @@ exports.up = function (knex) {
   return knex.schema.createTable("saved_analysis_results", (table) => {
     table.increments("id").primary();
     table.integer("user_id").unsigned().notNullable();
-    table.string("information_id").notNullable();
-    table.string("photo_url").notNullable();
-    table.string("prediction").notNullable();
+    table.string("date").notNullable();
+    table.string("image").notNullable();
+    table.string("infection_status").notNullable();
+    table.string("prediction_result").notNullable();
     table.double("accuracy").notNullable();
-    table.timestamp("timestamp").defaultTo(knex.fn.now());
+    table.text("information").notNullable();
 
     table.foreign("user_id").references("id").inTable("users");
   });

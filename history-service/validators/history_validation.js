@@ -12,9 +12,13 @@ const getHistoriesValidation = (user_id) => {
 
 const addHistoryValidation = ({
   user_id,
-  photo,
+  date,
+  image,
+  question_result,
+  infection_status,
   prediction_result,
-  accuracy_in_percent,
+  accuracy,
+  information,
 }) => {
   const errors = {};
 
@@ -22,24 +26,32 @@ const addHistoryValidation = ({
     errors.user_id = "User ID is required and must be a number.";
   }
 
-  if (!photo) {
-    errors.photo = "Photo is required and must be a valid file.";
+  if (!date) {
+    errors.date = "Invalid or missing date.";
   }
 
-  if (
-    !prediction_result ||
-    !validator.isLength(prediction_result, { min: 3 })
-  ) {
-    errors.prediction_result =
-      "Prediction result is required and must be a non-empty string.";
+  if (!image) {
+    errors.image = "Photo is required and must be a valid file.";
   }
 
-  if (
-    accuracy_in_percent === undefined ||
-    !validator.isDecimal(accuracy_in_percent.toString())
-  ) {
-    errors.accuracy_in_percent =
-      "Accuracy in percent is required and must be a decimal number.";
+  if (!Array.isArray(question_result)) {
+    errors.question_result = "Question result must be an array of number.";
+  }
+
+  if (!infection_status) {
+    errors.infection_status = "Infection status is required.";
+  }
+
+  if (!prediction_result) {
+    errors.prediction_result = "Prediction result is required.";
+  }
+
+  if (!accuracy || !validator.isDecimal(accuracy.toString())) {
+    errors.accuracy = "Accuracy is required and must be a decimal number.";
+  }
+
+  if (!information) {
+    errors.information = "Information is required.";
   }
 
   return errors;

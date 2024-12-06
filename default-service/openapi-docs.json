@@ -1035,16 +1035,16 @@
                     "message": "Success get all predict histories data",
                     "data": [
                       {
-                        "id": 1,
-                        "photo_url": "https://awsimages.detik.net.id/community/media/visual/2023/02/21/ilustrasi-seseorang-dengan-mata-bintitan_169.jpeg?w=1200",
-                        "prediction_result": "Bintititan/Stye",
-                        "accuracy_in_percent": 72
+                        "id": 2,
+                        "prediction_result": "(Stye / Hordeulum Eye)",
+                        "accuracy": 87.16,
+                        "image": "https://storage.googleapis.com/vizia-global-storage/eye-photos/saved/1733500811402"
                       },
                       {
-                        "id": 2,
-                        "photo_url": "https://awsimages.detik.net.id/community/media/visual/2023/02/21/ilustrasi-seseorang-dengan-mata-bintitan_169.jpeg?w=1200",
-                        "prediction_result": "Bintititan/Stye",
-                        "accuracy_in_percent": 72
+                        "id": 3,
+                        "prediction_result": "(Stye / Hordeulum Eye)",
+                        "accuracy": 87.16,
+                        "image": "https://storage.googleapis.com/vizia-global-storage/eye-photos/saved/1733502223438"
                       }
                     ]
                   }
@@ -1140,22 +1140,38 @@
                 "type": "object",
                 "required": [
                   "user_id",
-                  "photo",
+                  "date",
+                  "image",
+                  "question_result",
+                  "infection_status",
                   "prediction_result",
-                  "accuracy_in_percent"
+                  "accuracy",
+                  "information"
                 ],
                 "properties": {
                   "user_id": {
                     "type": "number"
                   },
-                  "photo": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "image": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "question_result": {
+                    "type": "array"
+                  },
+                  "infection_status": {
+                    "type": "string"
                   },
                   "prediction_result": {
                     "type": "string"
                   },
-                  "accuracy_in_percent": {
+                  "accuracy": {
+                    "type": "number"
+                  },
+                  "information": {
                     "type": "number"
                   }
                 }
@@ -1271,26 +1287,27 @@
                         "id": {
                           "type": "number"
                         },
-                        "photo_url": {
+                        "date": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string",
+                          "format": "binary"
+                        },
+                        "question_result": {
+                          "type": "array"
+                        },
+                        "infection_status": {
                           "type": "string"
                         },
                         "prediction_result": {
                           "type": "string"
                         },
-                        "accuracy_in_percent": {
+                        "accuracy": {
                           "type": "number"
                         },
-                        "characteristics": {
-                          "type": "array"
-                        },
-                        "symptons": {
-                          "type": "array"
-                        },
-                        "treatments": {
-                          "type": "array"
-                        },
-                        "preventions": {
-                          "type": "array"
+                        "information": {
+                          "type": "number"
                         }
                       }
                     }
@@ -1299,26 +1316,23 @@
                     "status": "success",
                     "message": "Success get predict history by id",
                     "data": {
-                      "id": 1,
-                      "photo_url": "https://awsimages.detik.net.id/community/media/visual/2023/02/21/ilustrasi-seseorang-dengan-mata-bintitan_169.jpeg?w=1200",
-                      "prediction_result": "Bintititan/Stye",
-                      "accuracy_in_percent": 72,
-                      "characteristics": [
-                        "Supporting line text lorem ipsum dolor sit amet.",
-                        "Supporting line text lorem ipsum dolor sit amet."
+                      "id": 3,
+                      "date": "06 December 2024, 21:16",
+                      "image": "https://storage.googleapis.com/vizia-global-storage/eye-photos/saved/1733502223438",
+                      "question_result": [
+                        0,
+                        1,
+                        0,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1
                       ],
-                      "symptons": [
-                        "Supporting line text lorem ipsum dolor sit amet.",
-                        "Supporting line text lorem ipsum dolor sit amet."
-                      ],
-                      "treatments": [
-                        "Supporting line text lorem ipsum dolor sit amet.",
-                        "Supporting line text lorem ipsum dolor sit amet."
-                      ],
-                      "preventions": [
-                        "Supporting line text lorem ipsum dolor sit amet.",
-                        "Supporting line text lorem ipsum dolor sit amet."
-                      ]
+                      "infection_status": "Positive Eye Disease",
+                      "prediction_result": "(Stye / Hordeulum Eye)",
+                      "accuracy": 87.16,
+                      "information": "<html><body>Isi string html keterangan .....</body></html>"
                     }
                   }
                 }

@@ -33,9 +33,9 @@ const getHistories = async (request, h) => {
     const mappedHistories = histories.map((history) => {
       return {
         id: history.id,
-        prediction_result: history.prediction,
-        accuracy_in_percent: history.accuracy,
-        photo_url: history.photo_url,
+        prediction_result: history.prediction_result,
+        accuracy: history.accuracy,
+        image: history.image,
       };
     });
 
@@ -77,23 +77,23 @@ const getHistoryById = async (request, h) => {
     }
 
     // Query to check prediction information
-    const infoRef = firestore.collection("strain_infection_informations");
-    const snapshot = await infoRef.doc(history[0].information_id).get();
-    const infoDoc = snapshot.data();
-
-    console.log("")
+    const [result_answers] = await db.query(
+      "SELECT * FROM `health_quiz_answers` WHERE `result_analysis_id`=?",
+      [id]
+    );
+    const resultAnswers = result_answers.map((result) => result.answer);
 
     // Mapping history schema for response
     const mappedHistory = history.map((history) => {
       return {
         id: history.id,
-        prediction_result: history.prediction,
-        accuracy_in_percent: history.accuracy,
-        photo_url: history.photo_url,
-        characteristics: infoDoc.characteristics,
-        symptons: infoDoc.symptons,
-        treatment: infoDoc.treatment,
-        prevention: infoDoc.prevention,
+        date: history.date,
+        image: history.image,
+        question_result: resultAnswers,
+        infection_status: history.infection_status,
+        prediction_result: history.prediction_result,
+        accuracy: history.accuracy,
+        information: history.information,
       };
     });
 
@@ -118,8 +118,16 @@ const getHistoryById = async (request, h) => {
 const addHistory = async (request, h) => {
   try {
     // Validate & destructuring request payload
-    const { user_id, photo, prediction_result, accuracy_in_percent } =
-      request.payload;
+    const {
+      user_id,
+      date,
+      image,
+      question_result,
+      infection_status,
+      prediction_result,
+      accuracy,
+      information,
+    } = request.payload;
     const validate = addHistoryValidation(request.payload);
 
     // Check validation errors possibility
@@ -133,16 +141,9 @@ const addHistory = async (request, h) => {
         .code(400);
     }
 
-    // Query to check prediction_result type
-    const infoRef = firestore.collection("strain_infection_informations");
-    const snapshot = await infoRef
-      .where("name", "==", "Bintitan") // TODO: Must from prediction_result later
-      .get();
-    const informationId = snapshot.docs[0].id;
-
     // Upload eye photo to cloud storage
     const gcsname = Date.now().toString();
-    await bucket.file("eye-photos/saved/" + gcsname).save(photo, {
+    await bucket.file("eye-photos/saved/" + gcsname).save(image, {
       metadata: {
         contentType: "image/jpeg",
       },
@@ -150,16 +151,30 @@ const addHistory = async (request, h) => {
     const newPhotoUrl = getPublicUrl(gcsname);
 
     // Query to save new analysis result
-    await db.query(
-      "INSERT INTO `saved_analysis_results` (`user_id`, `information_id`, `photo_url`, `prediction`, `accuracy`) VALUES (?, ?, ?, ?, ?)",
+    const [savedAnalysis] = await db.query(
+      "INSERT INTO `saved_analysis_results` (`user_id`, `date`, `image`, `infection_status`, `prediction_result`, `accuracy`, `information`) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         user_id,
-        informationId,
+        date,
         newPhotoUrl,
+        infection_status,
         prediction_result,
-        accuracy_in_percent,
+        accuracy,
+        information,
       ]
     );
+
+    // Iterate insert answers as DB transaction
+    const connection = await db.getConnection();
+    await connection.beginTransaction();
+    for (const result of question_result) {
+      await connection.query(
+        "INSERT INTO `health_quiz_answers` (`result_analysis_id`, `answer`) VALUES (?, ?)",
+        [savedAnalysis.insertId, result]
+      );
+    }
+    await connection.commit();
+    connection.release();
 
     return h
       .response({
