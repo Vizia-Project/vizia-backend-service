@@ -112,7 +112,6 @@ Here is list the main routes of this API, and what are their expected request bo
 | <kbd>PUT /user/{id}</kbd>     | Update account information and settings of user [request details](https://vizia-web-1037967286998.asia-southeast2.run.app/api-docs/#/User/put_user__id_)
 | <kbd>GET /articles</kbd>     | Fetch all articles from all resources [request details](https://vizia-web-1037967286998.asia-southeast2.run.app/api-docs/#/Article/get_articles)
 | <kbd>GET /articles/detail</kbd>     | Get detail from an article [request details](https://vizia-web-1037967286998.asia-southeast2.run.app/api-docs/#/Article/get_articles_detail)
-
 | <kbd>GET /histories</kbd>     | Fetch all histories of predicts result by user account [request details](https://vizia-web-1037967286998.asia-southeast2.run.app/api-docs/#/History/get_histories)
 | <kbd>POST /histories</kbd>     | Save predicts result by user account [request details](https://vizia-web-1037967286998.asia-southeast2.run.app/api-docs/#/History/post_histories)
 | <kbd>GET /histories/{id}</kbd>     | Fetch history detail of predicts result by history id [request details](https://vizia-web-1037967286998.asia-southeast2.run.app/api-docs/#/History/get_histories__id_)
