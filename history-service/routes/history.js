@@ -24,7 +24,8 @@ const historyRoutes = [
         output: 'stream',
         parse: true,
         multipart: true,
-        allow: "multipart/form-data"
+        allow: "multipart/form-data",
+        maxBytes: 10000000,
       }
     },
   },
