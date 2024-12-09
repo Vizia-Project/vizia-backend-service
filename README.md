@@ -1,7 +1,7 @@
 <h1 align="center" style="font-weight: bold;">Vizia API 💻</h1>
 
 <p align="center">
- <a href="#tech">Technologies</a> • 
+ <a href="#technologies">Technologies</a> • 
  <a href="#cloud-architecture">System Design</a> • 
  <a href="#folder-structure">Folder Strcuture</a> • 
  <a href="#started">Getting Started</a> • 
@@ -195,7 +195,7 @@ Special thank you for all people that contributed for this project.
 
 Here you will explain how other developers can contribute to your project. For example, explaining how can create their branches, which patterns to follow and how to open an pull request
 
-1. `git clone https://github.com/Fernanda-Kipper/text-editor.git`
+1. `git clone https://github.com/Vizia-Project/vizia-backend-service`
 2. `git checkout -b feature/NAME`
 3. Follow commit patterns
 4. Open a Pull Request explaining the problem solved or feature made, if exists, append screenshot of visual modifications and wait for the review!
