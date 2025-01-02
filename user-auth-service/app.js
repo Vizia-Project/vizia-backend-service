@@ -1,7 +1,7 @@
 const Hapi = require("@hapi/hapi");
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
-// const { jwtScheme, unauthorizedPreResponseCallback } = require("./config/auth");
+const { jwtScheme, unauthorizedPreResponseCallback } = require("./config/auth");
 
 require("dotenv").config();
 
