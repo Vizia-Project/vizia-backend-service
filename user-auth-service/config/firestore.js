@@ -1,6 +1,8 @@
 const { Firestore } = require("@google-cloud/firestore");
 const path = require("path");
 
+require("dotenv").config();
+
 const pathKey = path.resolve("./vizia-sa.json");
 
 const dbFirestore = new Firestore({
