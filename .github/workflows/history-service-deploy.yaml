@@ -13,9 +13,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create Google Services JSON File
+        working-directory: ./history-service
         env:
           VIZIA_SERVICE_ACCOUNT: ${{ secrets.VIZIA_SERVICE_ACCOUNT }}
-        run: echo $VIZIA_SERVICE_ACCOUNT | base64 -di > ./history-service/vizia-sa.json
+        run: echo $VIZIA_SERVICE_ACCOUNT | base64 -di > vizia-sa.json
 
       - name: Create app.yaml file
         working-directory: ./history-service
