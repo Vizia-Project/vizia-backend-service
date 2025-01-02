@@ -6,7 +6,6 @@ directories=(
   "database-migrator"
   "default-service"
   "history-service"
-  "predicts-service"
   "user-auth-service"
 )
 

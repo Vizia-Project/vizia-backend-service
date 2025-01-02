@@ -1,4 +1,4 @@
-const db = require("../config/database");
+const dbFirestore = require("../config/firestore");
 const { bucket, getPublicUrl } = require("../utils/img_upload");
 const { userUpdateValidation } = require("../validations/user_validation");
 
@@ -8,8 +8,9 @@ const getUser = async (request, h) => {
     const { id } = request.params;
 
     // Check if user not found
-    const [user] = await db.query("SELECT * FROM `users` WHERE `id`=?", [id]);
-    if (user.length === 0) {
+    const usersRef = dbFirestore.collection("users");
+    const userDoc = await usersRef.where("id", "==", id).get();
+    if (userDoc.docs.length === 0) {
       return h
         .response({
           status: "failed",
@@ -19,20 +20,18 @@ const getUser = async (request, h) => {
     }
 
     // Mapping user schema for response
-    const mappedUser = user.map((user) => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        photo_url: user.photo_url,
-      };
-    });
+    const user = {
+      id: userDoc.docs[0].data()["id"],
+      name: userDoc.docs[0].data()["name"],
+      email: userDoc.docs[0].data()["email"],
+      photo_url: userDoc.docs[0].data()["photo_url"],
+    };
 
     return h
       .response({
         status: "success",
         message: "Success get user preferences",
-        data: mappedUser[0],
+        data: user,
       })
       .code(200);
   } catch (error) {
@@ -65,8 +64,9 @@ const updateUser = async (request, h) => {
     }
 
     // Check if user not found
-    const [user] = await db.query("SELECT * FROM `users` WHERE `id`=?", [id]);
-    if (user.length === 0) {
+    const usersRef = dbFirestore.collection("users");
+    const userDoc = await usersRef.where("id", "==", id).get();
+    if (userDoc.docs.length === 0) {
       return h
         .response({
           status: "failed",
@@ -90,14 +90,14 @@ const updateUser = async (request, h) => {
     }
 
     // Update user in database
-    await db.query(
-      "UPDATE `users` SET `name`=?, `email`=?, `photo_url`=? WHERE `id`=?",
-      [
-        name ?? user[0].name,
-        email ?? user[0].email,
-        newPhotoUrl ?? user[0].photo_url,
-        id,
-      ]
+    const userDocRef = usersRef.doc(userDoc.docs[0].id);
+    await userDocRef.set(
+      {
+        name: name ?? userDoc.docs[0].data()["name"],
+        email: email ?? userDoc.docs[0].data()["email"],
+        photo_url: newPhotoUrl ?? userDoc.docs[0].data()["photo_url"],
+      },
+      { merge: true }
     );
 
     return h

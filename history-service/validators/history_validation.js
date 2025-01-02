@@ -3,8 +3,8 @@ const validator = require("validator");
 const getHistoriesValidation = (user_id) => {
   const errors = {};
 
-  if (!user_id || !validator.isInt(user_id.toString())) {
-    errors.user_id = "User ID is required and must be a number.";
+  if (!user_id) {
+    errors.user_id = "User ID is required.";
   }
 
   return errors;
@@ -22,8 +22,8 @@ const addHistoryValidation = ({
 }) => {
   const errors = {};
 
-  if (!user_id || !validator.isInt(user_id.toString())) {
-    errors.user_id = "User ID is required and must be a number.";
+  if (!user_id) {
+    errors.user_id = "User ID is required.";
   }
 
   if (!date) {

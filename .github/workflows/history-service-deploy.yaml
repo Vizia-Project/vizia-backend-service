@@ -12,6 +12,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Create vizia-sa.json file
+        working-directory: ./history-service
+        run: |
+          touch vizia-sa.json
+          echo "${{ secrets.VIZIA_SERVICE_ACCOUNT }}" >> vizia-sa.json
+
+      - name: Create app.yaml file
+        working-directory: ./history-service
+        run: |
+          touch app.yaml
+          echo "${{ secrets.HISTORY_APP_YAML }}" >> app.yaml
+
       - name: Setup Node.js and yarn
         uses: actions/setup-node@v2
         with:

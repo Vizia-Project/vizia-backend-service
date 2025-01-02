@@ -1,6 +1,8 @@
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 
+require("dotenv").config();
+
 const pathKey = path.resolve("./vizia-sa.json");
 
 const gcs = new Storage({
