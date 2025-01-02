@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Vizia API Docs - OpenAPI 3.0",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Backend REST API Documentation for Vizia Project"
   },
   "servers": [
@@ -75,7 +75,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "number"
+                          "type": "string"
                         },
                         "name": {
                           "type": "string"
@@ -91,7 +91,7 @@
                   "status": "success",
                   "message": "Login and get user are success",
                   "data": {
-                    "id": 115,
+                    "id": "20940b3d-b6a6-4e16-9266-b740a0bfd5e3",
                     "name": "Teme Wakaihasite",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzMzMTQ5MDU0fQ.hvEdNo2eyOeuzkutt3XB2Ndkrsiv8g01s_eFO133dlA"
                   }
@@ -201,7 +201,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "number"
+                          "type": "string"
                         },
                         "name": {
                           "type": "string"
@@ -217,7 +217,7 @@
                   "status": "success",
                   "message": "New account creation is success",
                   "data": {
-                    "id": 115,
+                    "id": "20940b3d-b6a6-4e16-9266-b740a0bfd5e3",
                     "name": "Teme Wakaihasite",
                     "email": "temewaki@gmail.com"
                   }
@@ -1035,13 +1035,13 @@
                     "message": "Success get all predict histories data",
                     "data": [
                       {
-                        "id": 2,
+                        "id": "20940b3d-b6a6-4e16-9266-b740a0bfd5e3",
                         "prediction_result": "(Stye / Hordeulum Eye)",
                         "accuracy": 87.16,
                         "image": "https://storage.googleapis.com/vizia-global-storage/eye-photos/saved/1733500811402"
                       },
                       {
-                        "id": 3,
+                        "id": "20940b3d-b6a6-4e16-9266-b740a0bfd5e3",
                         "prediction_result": "(Stye / Hordeulum Eye)",
                         "accuracy": 87.16,
                         "image": "https://storage.googleapis.com/vizia-global-storage/eye-photos/saved/1733502223438"
@@ -1285,7 +1285,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "number"
+                          "type": "string"
                         },
                         "date": {
                           "type": "string"
@@ -1316,7 +1316,7 @@
                     "status": "success",
                     "message": "Success get predict history by id",
                     "data": {
-                      "id": 3,
+                      "id": "20940b3d-b6a6-4e16-9266-b740a0bfd5e3",
                       "date": "06 December 2024, 21:16",
                       "image": "https://storage.googleapis.com/vizia-global-storage/eye-photos/saved/1733502223438",
                       "question_result": [

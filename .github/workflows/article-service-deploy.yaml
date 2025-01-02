@@ -12,6 +12,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Create app.yaml file
+        working-directory: ./article-service
+        run: |
+          touch app.yaml
+          echo "${{ secrets.ARTICLE_APP_YAML }}" >> app.yaml
+
       - name: Setup Node.js and yarn
         uses: actions/setup-node@v2
         with:

@@ -1,8 +1,0 @@
-runtime: nodejs20
-service: article-service
-
-env_variables:
-  NODE_ENV: production
-  PORT: 8080
-
-  JWT_SECRET: ae53240a8791cd94183739854c94aa7fe071bd9ce6395489892c8e98f3d0e3a63dc18adf637fee8d188b2fc3240d650a3a114ccbc56451da733b00a8a4c00abe

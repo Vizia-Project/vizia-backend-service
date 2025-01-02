@@ -1,5 +1,4 @@
-const firestore = require("../utils/firestore");
-const db = require("../config/database");
+const dbFirestore = require("../config/firestore");
 const { bucket, getPublicUrl } = require("../utils/img_upload");
 const {
   addHistoryValidation,
@@ -24,26 +23,29 @@ const getHistories = async (request, h) => {
     }
 
     // Get histories by user_id from database
-    const [histories] = await db.query(
-      "SELECT * FROM `saved_analysis_results` WHERE `user_id`=?",
-      [user_id]
+    const savedAnalysisResultsRef = dbFirestore.collection(
+      "saved_analysis_results"
     );
+    const resDocs = await savedAnalysisResultsRef
+      .where("user_id", "==", user_id)
+      .get();
 
     // Mapping histories schema for response
-    const mappedHistories = histories.map((history) => {
-      return {
-        id: history.id,
-        prediction_result: history.prediction_result,
-        accuracy: history.accuracy,
-        image: history.image,
-      };
-    });
+    const histories = [];
+    resDocs.docs.forEach((doc) =>
+      histories.push({
+        id: doc.data()["id"],
+        prediction_result: doc.data()["prediction_result"],
+        accuracy: doc.data()["accuracy"],
+        image: doc.data()["image"],
+      })
+    );
 
     return h
       .response({
         status: "success",
         message: "Success get analysis histories",
-        data: mappedHistories,
+        data: histories,
       })
       .code(200);
   } catch (error) {
@@ -63,11 +65,11 @@ const getHistoryById = async (request, h) => {
     const { id } = request.params;
 
     // Check if history not found
-    const [history] = await db.query(
-      "SELECT * FROM `saved_analysis_results` WHERE `id`=?",
-      [id]
-    );
-    if (history.length === 0) {
+    const analysisRes = await dbFirestore
+      .collection("saved_analysis_results")
+      .where("id", "==", id)
+      .get();
+    if (analysisRes.docs.length === 0) {
       return h
         .response({
           status: "failed",
@@ -77,31 +79,29 @@ const getHistoryById = async (request, h) => {
     }
 
     // Query to check prediction information
-    const [result_answers] = await db.query(
-      "SELECT * FROM `health_quiz_answers` WHERE `result_analysis_id`=?",
-      [id]
-    );
-    const resultAnswers = result_answers.map((result) => result.answer);
+    const anwersRes = await dbFirestore
+      .collection("health_quiz_answers")
+      .where("result_analysis_id", "==", id)
+      .get();
+    const resultAnswers = anwersRes.docs.map((result) => result.data()['answer']);
 
     // Mapping history schema for response
-    const mappedHistory = history.map((history) => {
-      return {
-        id: history.id,
-        date: history.date,
-        image: history.image,
-        question_result: resultAnswers,
-        infection_status: history.infection_status,
-        prediction_result: history.prediction_result,
-        accuracy: history.accuracy,
-        information: history.information,
-      };
-    });
+    const history = {
+      id: analysisRes.docs[0].data()['id'],
+      date: analysisRes.docs[0].data()['date'],
+      image: analysisRes.docs[0].data()['image'],
+      question_result: resultAnswers,
+      infection_status: analysisRes.docs[0].data()['infection_status'],
+      prediction_result: analysisRes.docs[0].data()['prediction_result'],
+      accuracy: analysisRes.docs[0].data()['prediction_result'],
+      information: analysisRes.docs[0].data()['information'],
+    };
 
     return h
       .response({
         status: "success",
         message: "Success get analysis history by id",
-        data: mappedHistory[0],
+        data: history,
       })
       .code(200);
   } catch (error) {
@@ -151,30 +151,35 @@ const addHistory = async (request, h) => {
     const newPhotoUrl = getPublicUrl(gcsname);
 
     // Query to save new analysis result
-    const [savedAnalysis] = await db.query(
-      "INSERT INTO `saved_analysis_results` (`user_id`, `date`, `image`, `infection_status`, `prediction_result`, `accuracy`, `information`) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [
-        user_id,
-        date,
-        newPhotoUrl,
-        infection_status,
-        prediction_result,
-        accuracy,
-        information,
-      ]
-    );
+    const id = crypto.randomUUID();
+    await dbFirestore.collection("saved_analysis_results").doc().set({
+      id,
+      user_id,
+      date,
+      infection_status,
+      prediction_result,
+      accuracy,
+      information,
+      image: newPhotoUrl,
+    });
 
     // Iterate insert answers as DB transaction
-    const connection = await db.getConnection();
-    await connection.beginTransaction();
+    const batch = dbFirestore.batch();
+    const healthQuizAnswerDocs = [];
+
     for (const result of question_result) {
-      await connection.query(
-        "INSERT INTO `health_quiz_answers` (`result_analysis_id`, `answer`) VALUES (?, ?)",
-        [savedAnalysis.insertId, result]
-      );
+      healthQuizAnswerDocs.push({
+        answer: result,
+        result_analysis_id: id,
+      });
     }
-    await connection.commit();
-    connection.release();
+
+    const quizAnswersRef = dbFirestore.collection("health_quiz_answers");
+    healthQuizAnswerDocs.forEach((data) => {
+      const docRef = quizAnswersRef.doc();
+      batch.set(docRef, data);
+    });
+    await batch.commit();
 
     return h
       .response({
