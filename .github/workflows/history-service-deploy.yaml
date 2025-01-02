@@ -12,11 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create Google Services JSON File
+      - name: Create vizia-sa.json file
         working-directory: ./history-service
-        env:
-          VIZIA_SERVICE_ACCOUNT: ${{ secrets.VIZIA_SERVICE_ACCOUNT }}
-        run: echo $VIZIA_SERVICE_ACCOUNT | base64 -di > vizia-sa.json
+        run: |
+          touch vizia-sa.json
+          echo "${{ secrets.VIZIA_SERVICE_ACCOUNT }}" >> vizia-sa.json
 
       - name: Create app.yaml file
         working-directory: ./history-service
